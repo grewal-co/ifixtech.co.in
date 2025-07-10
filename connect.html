@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iFixTech - Your Tech Solution</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 25%, #5d6d7e 50%, #85929e 75%, #aeb6bf 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { width: 8px; height: 8px; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 12px; height: 12px; left: 20%; animation-delay: 1s; }
+        .particle:nth-child(3) { width: 6px; height: 6px; left: 70%; animation-delay: 2s; }
+        .particle:nth-child(4) { width: 10px; height: 10px; left: 80%; animation-delay: 3s; }
+        .particle:nth-child(5) { width: 14px; height: 14px; left: 60%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10%, 90% { opacity: 1; }
+            50% { transform: translateY(-10vh) rotate(180deg); }
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Logo section */
+        .logo-section {
+            text-align: center;
+            animation: slideDown 1s ease-out;
+        }
+
+        .logo {
+            text-align: center;
+            padding-top: 0px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .logo span {
+            color: #000000;
+        }
+
+        .brand-name {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 8px;
+        }
+
+        .tagline {
+            margin-top: 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        /* Social buttons */
+        .social-section {
+            margin: 10px 0;
+            animation: slideUp 1s ease-out 0.3s both;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .social-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            font-size: 28px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .social-btn:hover::before {
+            left: 100%;
+        }
+
+        .whatsapp { background: rgba(128, 128, 128, 0.3); }
+        .instagram { background: rgba(96, 96, 96, 0.3); }
+        .call { background: rgba(64, 64, 64, 0.3); }
+
+        .social-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Info cards */
+        .info-section {
+            margin: 20px 0;
+            animation: slideUp 1s ease-out 0.6s both;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2px;
+            margin: 15px 0;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #6c757d, #868e96, #adb5bd, #ced4da);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-icon {
+            font-size: 20px;
+            margin-right: 15px;
+            display: inline-block;
+            width: 30px;
+        }
+
+        .card-content {
+            color: white;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .info-card a, .info-card {
+            text-decoration: none;
+        }
+
+        .card-text {
+            flex: 1;
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .card-subtitle {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .card-arrow {
+            font-size: 18px;
+            opacity: 0.6;
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover .card-arrow {
+            transform: translateX(5px);
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Pulse animation for call button */
+        .call {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(128, 128, 128, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(128, 128, 128, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(128, 128, 128, 0);
+            }
+        }
+
+        /* Map buttons */
+        .map-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 0px;
+        }
+
+        .map-btn {
+            flex: 1;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            height: 32px;
+        }
+
+        .map-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .map-btn:hover::before {
+            left: 100%;
+        }
+
+        .map-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin: 40px 0 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            animation: slideUp 1s ease-out 0.9s both;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="container">
+        <!-- Logo Section -->
+        <div class="logo-section">
+            <div class="logo">
+                <img src="images/logo W.png" alt="iFixTech Logo" style="height: 62px;">
+                <img src="images/under logo.png" alt="iFixTech Logo" style="height: 62px;">
+            </div>
+        </div>
+
+        <!-- Social Buttons -->
+        <div class="social-section">
+            <div class="social-buttons">
+                <a href="https://wa.me/917973788148" class="social-btn whatsapp" target="_blank">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.894 3.488"/>
+                    </svg>
+                </a>
+                <a href="https://instagram.com/ifixtech.co" class="social-btn instagram" target="_blank">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                <a href="tel:+9101614910150" class="social-btn call">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="tagline">
+                <h2>Tech Issues...?<br>Bring it in.</h2>
+            </div>
+        </div>
+
+        <!-- Info Cards -->
+        <div class="info-section">
+            <a href="https://ifixtech.co.in" class="info-card" target="_blank">
+                <div class="card-content">
+                    <span class="card-icon">🌐</span>
+                    <div class="card-text">
+                        <div class="card-title">Visit Our Website</div>
+                        <div class="card-subtitle">ifixtech.co.in</div>
+                    </div>
+                    <span class="card-arrow">→</span>
+                </div>
+            </a>
+
+            <a href="https://www.google.com/maps/place/iFixTech/@30.8727495,75.8157806,17z/data=!3m1!4b1!4m6!3m5!1s0x391a8303116d300d:0x6d2b1b02b7d47248!8m2!3d30.8727495!4d75.8157806!16s%2Fg%2F11x8rhhvt8?hl=en&entry=ttu&g_ep=EgoyMDI1MDYyNi4wIKXMDSoASAFQAw%3D%3D" class="info-card" target="_blank">
+                <div class="card-content">
+                    <span class="card-icon">📍</span>
+                    <div class="card-text">
+                        <div class="card-title">Visit Our Location</div>
+                        <div class="card-subtitle">IFIXTECH, Sua Rd, Passi Nagar, Pakhowal Rd<br>Ludhiana, Punjab. 141013</div>
+                    </div>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="map-buttons">
+                    <a href="https://maps.app.goo.gl/FqA1pDJftvWagA4F6" class="map-btn" target="_blank" onclick="event.stopPropagation()">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" alt="Google Maps" width="16" height="16">
+                        Google Maps
+                    </a>
+                    <a href="https://maps.apple/p/XmAxCcL5L74iEc" class="map-btn" target="_blank" onclick="event.stopPropagation()">
+                        <!--
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <rect width="24" height="24" rx="5" fill="url(#appleGradient)"/>
+                            <path d="M12 3C8.69 3 6 5.69 6 9c0 4.5 6 12 6 12s6-7.5 6-12c0-3.31-2.69-6-6-6zm0 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="white"/>
+                            <defs>
+                                <linearGradient id="appleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#007AFF;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#0051D5;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                        </svg> -->
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/17/AppleMaps_logo.svg" alt="Google Maps" width="16" height="16">
+                        Apple Maps
+                    </a>
+                </div>
+            </a>
+
+            <a href="mailto:ludhiana@ifixtech.co.in" class="info-card">
+                <div class="card-content">
+                    <span class="card-icon">✉️</span>
+                    <div class="card-text">
+                        <div class="card-title">Email Us</div>
+                        <div class="card-subtitle">ludhiana@ifixtech.co.in</div>
+                    </div>
+                    <span class="card-arrow">→</span>
+                </div>
+            </a>
+
+            <div class="info-card" onclick="sharePageLink()">
+                <div class="card-content">
+                    <span class="card-icon">📤</span>
+                    <div class="card-text">
+                        <div class="card-title">Share Our Page</div>
+                        <div class="card-subtitle">Share the link to our page</div>
+                    </div>
+                    <span class="card-arrow">→</span>
+                </div>
+            </div>
+
+            <div class="info-card" onclick="saveContact()">
+                <div class="card-content">
+                    <span class="card-icon">💾</span>
+                    <div class="card-text">
+                        <div class="card-title">Save Contact</div>
+                        <div class="card-subtitle">Add us to your contacts</div>
+                    </div>
+                    <span class="card-arrow">→</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Powered by iFixTech © 2025
+        </div>
+    </div>
+
+    <script>
+        // Add click animations
+        document.querySelectorAll('.social-btn, .info-card').forEach(element => {
+            element.addEventListener('click', function(e) {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+
+        // Share page link functionality
+        function sharePageLink() {
+            // Change this URL to your actual page URL
+            const pageUrl = 'https://ifixtech.co.in/connect'; // or 'https://ifixtech.co.in/connect.html'
+            const shareData = {
+                title: 'iFixTech - Your Tech Solution',
+                text: 'Check out iFixTech for all your technology needs!',
+                url: pageUrl
+            };
+
+            // Check if native sharing is available
+            if (navigator.share) {
+                navigator.share(shareData).catch(err => {
+                    console.log('Error sharing:', err);
+                    fallbackShare(pageUrl);
+                });
+            } else {
+                fallbackShare(pageUrl);
+            }
+        }
+
+        // Fallback sharing function
+        function fallbackShare(url) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showToast('Link copied to clipboard!');
+                }).catch(err => {
+                    console.log('Error copying to clipboard:', err);
+                    showToast('Unable to copy link');
+                });
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast('Link copied to clipboard!');
+                } catch (err) {
+                    showToast('Unable to copy link');
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        // Device detection
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        function isIOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent);
+        }
+
+        function isAndroid() {
+            return /Android/i.test(navigator.userAgent);
+        }
+
+        // Save contact functionality
+        function saveContact() {
+            const contactData = {
+                name: 'iFixTech',
+                org: 'iFixTech',
+                phone1: '+917973788148',
+                phone2: '+9101614910150',
+                email: 'ludhiana@ifixtech.co.in',
+                website: 'https://ifixtech.co.in',
+                address: 'IFIXTECH, Sua Rd, Passi Nagar, Pakhowal Rd, Ludhiana, Punjab, 141013, India'
+            };
+
+            if (isMobile()) {
+                // Try mobile-specific methods first
+                if (isIOS()) {
+                    tryIOSContact(contactData);
+                } else if (isAndroid()) {
+                    tryAndroidContact(contactData);
+                } else {
+                    // Fallback for other mobile devices
+                    tryVCardDownload(contactData);
+                }
+            } else {
+                // Desktop - show options
+                showDesktopContactOptions(contactData);
+            }
+        }
+
+        // iOS contact method
+        function tryIOSContact(data) {
+            // Try to open iOS contacts app with pre-filled data
+            const contactURL = `mailto:${data.email}?subject=Add%20Contact&body=Name:%20${encodeURIComponent(data.name)}%0AOrganization:%20${encodeURIComponent(data.org)}%0APhone%201:%20${encodeURIComponent(data.phone1)}%0APhone%202:%20${encodeURIComponent(data.phone2)}%0AEmail:%20${encodeURIComponent(data.email)}%0AWebsite:%20${encodeURIComponent(data.website)}%0AAddress:%20${encodeURIComponent(data.address)}`;
+            
+            // First try vCard method
+            const vCardURL = createVCardDataURL(data);
+            const link = document.createElement('a');
+            link.href = vCardURL;
+            link.download = 'iFixTech-Contact.vcf';
+            
+            // Try to trigger the download
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Clean up
+            setTimeout(() => {
+                URL.revokeObjectURL(vCardURL);
+            }, 1000);
+            
+            showToast('Contact file created! Open it to add to your contacts.');
+        }
+
+        // Android contact method
+        function tryAndroidContact(data) {
+            // Try Android intent first
+            const androidIntent = `intent://contacts/people/#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.dir/contact;S.name=${encodeURIComponent(data.name)};S.phone=${encodeURIComponent(data.phone1)};S.email=${encodeURIComponent(data.email)};S.company=${encodeURIComponent(data.org)};S.postal=${encodeURIComponent(data.address)};end`;
+            
+            try {
+                window.location.href = androidIntent;
+                showToast('Opening contacts app...');
+            } catch (error) {
+                // Fallback to vCard download
+                tryVCardDownload(data);
+            }
+        }
+
+        // Create vCard data URL
+        function createVCardDataURL(data) {
+            const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:${data.name}
+ORG:${data.org}
+TEL;TYPE=WORK:${data.phone1}
+TEL;TYPE=MOBILE:${data.phone2}
+EMAIL:${data.email}
+URL:${data.website}
+ADR;TYPE=WORK:;;${data.address}
+END:VCARD`;
+            
+            const blob = new Blob([vcard], { type: 'text/vcard' });
+            return URL.createObjectURL(blob);
+        }
+
+        // VCard download fallback
+        function tryVCardDownload(data) {
+            const vCardURL = createVCardDataURL(data);
+            const link = document.createElement('a');
+            link.href = vCardURL;
+            link.download = 'iFixTech-Contact.vcf';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            setTimeout(() => {
+                URL.revokeObjectURL(vCardURL);
+            }, 1000);
+            
+            showToast('Contact file downloaded! Open it to add to your contacts.');
+        }
+
+        // Desktop contact options
+        function showDesktopContactOptions(data) {
+            // Create a modal-like overlay
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+                backdrop-filter: blur(5px);
+            `;
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+                border-radius: 20px;
+                padding: 30px;
+                max-width: 400px;
+                width: 90%;
+                color: white;
+                text-align: center;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            `;
+            
+            modal.innerHTML = `
+                <h3 style="margin-bottom: 20px; font-size: 24px;">Save Contact</h3>
+                <p style="margin-bottom: 25px; opacity: 0.9;">Choose how you'd like to save our contact:</p>
+                
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <button id="downloadVCard" style="
+                        background: rgba(255, 255, 255, 0.1);
+                        border: 1px solid rgba(255, 255, 255, 0.3);
+                        color: white;
+                        padding: 15px 20px;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        transition: all 0.3s ease;
+                        backdrop-filter: blur(10px);
+                    ">📱 Download Contact File (.vcf)</button>
+                    
+                    <button id="copyContact" style="
+                        background: rgba(255, 255, 255, 0.1);
+                        border: 1px solid rgba(255, 255, 255, 0.3);
+                        color: white;
+                        padding: 15px 20px;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        transition: all 0.3s ease;
+                        backdrop-filter: blur(10px);
+                    ">📋 Copy Contact Info</button>
+                    
+                    <button id="outlookContact" style="
+                        background: rgba(255, 255, 255, 0.1);
+                        border: 1px solid rgba(255, 255, 255, 0.3);
+                        color: white;
+                        padding: 15px 20px;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        transition: all 0.3s ease;
+                        backdrop-filter: blur(10px);
+                    ">📧 Add to Outlook</button>
+                    
+                    <button id="closeModal" style="
+                        background: rgba(255, 255, 255, 0.05);
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                        color: rgba(255, 255, 255, 0.7);
+                        padding: 10px 20px;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        font-size: 14px;
+                        margin-top: 10px;
+                    ">Cancel</button>
+                </div>
+            `;
+            
+            // Add hover effects
+            const buttons = modal.querySelectorAll('button:not(#closeModal)');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', () => {
+                    button.style.background = 'rgba(255, 255, 255, 0.2)';
+                    button.style.transform = 'translateY(-2px)';
+                });
+                button.addEventListener('mouseleave', () => {
+                    button.style.background = 'rgba(255, 255, 255, 0.1)';
+                    button.style.transform = 'translateY(0)';
+                });
+            });
+            
+            overlay.appendChild(modal);
+            document.body.appendChild(overlay);
+            
+            // Add event listeners
+            document.getElementById('downloadVCard').addEventListener('click', () => {
+                tryVCardDownload(data);
+                document.body.removeChild(overlay);
+            });
+            
+            document.getElementById('copyContact').addEventListener('click', () => {
+                const contactText = `${data.name}\n${data.org}\n\nPhone: ${data.phone1}\nPhone: ${data.phone2}\nEmail: ${data.email}\nWebsite: ${data.website}\nAddress: ${data.address}`;
+                
+                navigator.clipboard.writeText(contactText).then(() => {
+                    showToast('Contact info copied to clipboard!');
+                }).catch(() => {
+                    showToast('Unable to copy contact info');
+                });
+                document.body.removeChild(overlay);
+            });
+            
+            document.getElementById('outlookContact').addEventListener('click', () => {
+                const outlookURL = `https://outlook.live.com/people/0/new?name=${encodeURIComponent(data.name)}&email=${encodeURIComponent(data.email)}&phone=${encodeURIComponent(data.phone1)}&company=${encodeURIComponent(data.org)}`;
+                window.open(outlookURL, '_blank');
+                document.body.removeChild(overlay);
+                showToast('Opening Outlook...');
+            });
+            
+            document.getElementById('closeModal').addEventListener('click', () => {
+                document.body.removeChild(overlay);
+            });
+            
+            // Close on overlay click
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    document.body.removeChild(overlay);
+                }
+            });
+        }
+
+        // Add some interactive particle effects on touch
+        document.addEventListener('touchstart', function(e) {
+            const touch = e.touches[0];
+            createTouchParticle(touch.clientX, touch.clientY);
+        });
+
+        function createTouchParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            particle.style.width = '6px';
+            particle.style.height = '6px';
+            particle.style.background = 'rgba(255, 255, 255, 0.6)';
+            particle.style.borderRadius = '50%';
+            particle.style.pointerEvents = 'none';
+            particle.style.zIndex = '1000';
+            particle.style.animation = 'touchParticle 1s ease-out forwards';
+            
+            document.body.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 1000);
+        }
+
+        // Add CSS for touch particle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes touchParticle {
+                0% { transform: scale(1) translateY(0); opacity: 1; }
+                100% { transform: scale(0) translateY(-50px); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

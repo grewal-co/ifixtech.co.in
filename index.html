@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iFixTech</title>
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: #1d1d1f;
+            line-height: 1.5;
+        }
+        
+        /* Wrapper for consistent alignment */
+        .wrapper {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 16px 0; /* Remove horizontal padding */
+            z-index: 100;
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            padding-top: 10px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .logo span {
+            color: #000000;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #1d1d1f;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #660092;
+        }
+        
+        /* Nav social icon */
+        .nav-social {
+            padding-top: 10px;
+            margin-right: 8px;
+        }
+        
+        .social-icon-nav {
+            color: #000000;
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-link:hover .social-icon-nav {
+            color: #660092;
+            transform: scale(1.2);
+        }
+        
+        .contact-button {
+            background-color: #000000;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-button:hover {
+            background-color: #660092;
+            transform: scale(1.05);
+        }
+        
+        /* Hero section */
+        .hero {
+            padding: 160px 0 80px; /* Remove horizontal padding */
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+        
+        .hero p {
+            font-size: 24px;
+            color: #000;
+            max-width: 600px;
+            margin: 0 auto 40px; /* Center with margin auto */
+        }
+        
+        /* Services section */
+        .services {
+            padding: 80px 0; /* Remove horizontal padding */
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 64px;
+        }
+        
+        .devices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+        
+        .device-card {
+            background-color: #f5f5f7;
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .device-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .device-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+        
+        .device-card h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+        
+        .device-card p {
+            color: #86868b;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .learn-more {
+            color: #660092;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .learn-more::after {
+            content: "→";
+            margin-left: 4px;
+            transition: transform 0.3s ease;
+        }
+        
+        .learn-more:hover::after {
+            transform: translateX(4px);
+        }
+        
+        /* Contact section */
+        .contact {
+            background-color: #f5f5f7;
+            padding: 80px 0; /* Remove horizontal padding */
+        }
+        
+        .contact-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .contact-title {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .contact-description {
+            font-size: 20px;
+            color: #86868b;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+        
+        .contact-options {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .contact-option {
+            background-color: white;
+            padding: 32px;
+            border-radius: 16px;
+            width: 300px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .contact-option:hover {
+            transform: scale(1.05);
+        }
+        
+        .contact-icon {
+            font-size: 36px;
+            margin-bottom: 16px;
+            color: #8f00cc;
+        }
+        
+        .contact-option h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .contact-option p {
+            color: #86868b;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .contact-option a {
+            display: inline-block;
+            color: #660092;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .map-icon {
+            width: 32px;
+            height: 32px;
+            margin-right: 15px;
+            margin-left: 15px;
+            padding-top: 5px; /* optional */
+        }
+        
+        /* Social media links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 8px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-link:hover {
+            transform: scale(1.2);
+        }
+        
+        .social-icon {
+            color: #000000;
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0; /* Remove horizontal padding */
+            text-align: center;
+            color: #86868b;
+            font-size: 14px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .footer-links a {
+            color: #1d1d1f;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #660092;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 40px;
+            }
+            
+            .hero p {
+                font-size: 20px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .contact-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="wrapper">
+            <div class="nav-container">
+                <div class="logo">
+                    <img src="images/logo.png" alt="iFixTech Logo" style="height: 28px;">
+                </div>
+                <div class="nav-links">
+                    <a href="#">Home</a>
+                    <a href="#services">Services</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="nav-right">
+                    <div class="nav-social">
+                        <a href="https://www.instagram.com/ifixtech.co" target="_blank" class="social-link">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHg9IjIiIHk9IjIiIHJ4PSI1IiByeT0iNSIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjMiLz48cGF0aCBkPSJNMTcuNSA2LjVoLS4wMSIvPjwvc3ZnPg==" alt="Instagram" class="social-icon-nav">
+                        </a>
+                    </div>
+                </div>
+                <button class="contact-button" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Get a Quote</button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="wrapper">
+            <h1>Tech Issues...?<br>Bring it in.</h1>
+            <p>Professional repair service for all your electronic devices.</p>
+            <button class="contact-button" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Contact Us</button>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="wrapper">
+            <h2 class="section-title">Devices We Repair</h2>
+            <div class="devices-grid">
+                <div class="device-card">
+                    <div class="device-icon">📱</div>
+                    <h3>Smartphones</h3>
+                    <p>Screen replacements, battery swaps, charging port fixes, and all other issues for iOS and Android phones.</p>
+                    <a href="#" class="learn-more">Learn more</a>
+                </div>
+                
+                <div class="device-card">
+                    <div class="device-icon">💻</div>
+                    <h3>Laptops</h3>
+                    <p>Hardware repairs, OS issues, virus removal, data recovery for all major brands including Apple MacBooks.</p>
+                    <a href="#" class="learn-more">Learn more</a>
+                </div>
+                
+                <div class="device-card">
+                    <div class="device-icon">📲</div>
+                    <h3>Tablets</h3>
+                    <p>Screen repairs, battery replacements, and other fixes for iPads and Android tablets.</p>
+                    <a href="#" class="learn-more">Learn more</a>
+                </div>
+                
+                <div class="device-card">
+                    <div class="device-icon">🖥️</div>
+                    <h3>Desktop PCs</h3>
+                    <p>Component upgrades, troubleshooting, system optimization, and custom builds for all PC setups.</p>
+                    <a href="#" class="learn-more">Learn more</a>
+                </div>
+                
+                <div class="device-card">
+                    <div class="device-icon">🍎</div>
+                    <h3>iMacs</h3>
+                    <p>Screen replacements, storage upgrades, power issues, and performance optimization for all iMac models.</p>
+                    <a href="#" class="learn-more">Learn more</a>
+                </div>
+                
+                <div class="device-card">
+                    <div class="device-icon">🎮</div>
+                    <h3>Gaming Consoles</h3>
+                    <p>HDMI port fixes, disc drive repairs, and overheating issues for PlayStation and Xbox consoles.</p>
+                    <a href="#" class="learn-more">Learn more</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="wrapper">
+            <div class="contact-container">
+                <h2 class="contact-title">Get in Touch</h2>
+                <p class="contact-description">Have a device that needs fixing? Contact us for a free quote or to answer any questions.</p>
+                
+                <div class="contact-options">
+                    <div class="contact-option">
+                        <div class="contact-icon">📞</div>
+                        <h3>Call Us</h3>
+                        <a href="tel:+9101614910150">0161-4910150</a>
+                    </div>
+                    
+                    <div class="contact-option">
+                        <div class="contact-icon">✉️</div>
+                        <h3>Email</h3>
+                        <p>Send us your repair inquiry</p>
+                        <a href="mailto:ludhiana@ifixtech.co.in">ludhiana@ifixtech.co.in</a>
+                    </div>
+                    
+                    <div class="contact-option">
+                        <div class="contact-icon">📍</div>
+                        <h3>Visit Us</h3>
+                        <p>Drop by our repair center</p>
+                        <a href="https://maps.app.goo.gl/FqA1pDJftvWagA4F6" target="_blank" rel="noopener">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" alt="Google Maps" class="map-icon">
+                        </a>
+                        <a href="https://maps.apple/p/XmAxCcL5L74iEc" target="_blank" rel="noopener">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/17/AppleMaps_logo.svg" alt="Apple Maps" class="map-icon">
+                        </a>
+                    </div>
+                </div>
+                <br>
+                <h3 class="contact-title">Socials</h3>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/ifixtech.co" target="_blank" class="social-link">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHg9IjIiIHk9IjIiIHJ4PSI1IiByeT0iNSIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjMiLz48cGF0aCBkPSJNMTcuNSA2LjVoLS4wMSIvPjwvc3ZnPg==" alt="Instagram" class="social-icon">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="wrapper">
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Warranty Information</a>
+            </div>
+            <p>© 2025 iFixTech. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Simple animation for scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        
+        // Apply to all device cards
+        document.querySelectorAll('.device-card').forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
