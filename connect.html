@@ -69,7 +69,7 @@
             font-size: 24px;
             font-weight: 600;
         }
-        
+
         .logo span {
             color: #000000;
         }
@@ -315,6 +315,32 @@
             background: rgba(255, 255, 255, 0.15);
         }
 
+        .custom-toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 14px 24px;
+            font-size: 16px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease ease-in-out;
+            z-index: 10000;
+            max-width: 80vw;
+            text-align: center;
+        }
+
+        .custom-toast.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
         /* Footer */
         .footer {
             text-align: center;
@@ -395,17 +421,6 @@
                         Google Maps
                     </a>
                     <a href="https://maps.apple/p/XmAxCcL5L74iEc" class="map-btn" target="_blank" onclick="event.stopPropagation()">
-                        <!--
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                            <rect width="24" height="24" rx="5" fill="url(#appleGradient)"/>
-                            <path d="M12 3C8.69 3 6 5.69 6 9c0 4.5 6 12 6 12s6-7.5 6-12c0-3.31-2.69-6-6-6zm0 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="white"/>
-                            <defs>
-                                <linearGradient id="appleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#007AFF;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#0051D5;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                        </svg> -->
                         <img src="https://upload.wikimedia.org/wikipedia/commons/1/17/AppleMaps_logo.svg" alt="Google Maps" width="16" height="16">
                         Apple Maps
                     </a>
@@ -465,35 +480,52 @@
         // Show toast notification
         function showToast(message) {
             const toast = document.createElement('div');
-            toast.className = 'toast';
+            toast.className = 'custom-toast';
             toast.textContent = message;
             document.body.appendChild(toast);
-            
+
             setTimeout(() => {
                 toast.classList.add('show');
             }, 100);
-            
+
             setTimeout(() => {
                 toast.classList.remove('show');
                 setTimeout(() => {
-                    document.body.removeChild(toast);
+                    if (toast.parentNode) {
+                        document.body.removeChild(toast);
+                    }
                 }, 300);
             }, 3000);
         }
 
         // Share page link functionality
         function sharePageLink() {
-            // Change this URL to your actual page URL
-            const pageUrl = 'https://ifixtech.co.in/connect'; // or 'https://ifixtech.co.in/connect.html'
-            const shareData = {
-                title: 'iFixTech - Your Tech Solution',
-                text: 'Check out iFixTech for all your technology needs!',
-                url: pageUrl
-            };
-
-            // Check if native sharing is available
+            const pageUrl = 'https://ifixtech.co.in/connect';
+            const shareMessages = [
+                {
+                    title: '🪛 Tech issues? This is where to go.',
+                    text: 'If you ever run into tech problems — phone, laptop, anything — this is the place I recommend.\nWorth saving just in case.',
+                    url: pageUrl
+                },
+                {
+                    title: '⚙️📲 Tech troubles? Sorted.',
+                    text: 'Broken screen? Slow laptop? Battery issues? These folks fix it all.\nKeep it handy — future you might thank you.',
+                    url: pageUrl
+                },
+                {
+                    title: '🪛💻 Trusted for Tech Repairs.',
+                    text: 'From everyday glitches to serious fixes — phones, laptops, tablets — they’ve got it covered.\nDefinitely worth saving.',
+                    url: pageUrl
+                },
+                {
+                    title: '🛠️😲 Tech emergency? Chill. Got a spot.',
+                    text: 'They handle everything from cracked screens to “why won’t it turn on?” vibes.\nSave it now, thank yourself later.',
+                    url: pageUrl
+                }
+            ];
+            const randomMsg = shareMessages[Math.floor(Math.random() * shareMessages.length)];
             if (navigator.share) {
-                navigator.share(shareData).catch(err => {
+                navigator.share(randomMsg).catch(err => {
                     console.log('Error sharing:', err);
                     fallbackShare(pageUrl);
                 });
@@ -512,7 +544,6 @@
                     showToast('Unable to copy link');
                 });
             } else {
-                // Fallback for older browsers
                 const textArea = document.createElement('textarea');
                 textArea.value = url;
                 document.body.appendChild(textArea);
@@ -532,77 +563,24 @@
             return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         }
 
-        function isIOS() {
-            return /iPad|iPhone|iPod/.test(navigator.userAgent);
-        }
-
-        function isAndroid() {
-            return /Android/i.test(navigator.userAgent);
-        }
-
         // Save contact functionality
         function saveContact() {
             const contactData = {
                 name: 'iFixTech',
                 org: 'iFixTech',
                 phone1: '+917973788148',
-                phone2: '+9101614910150',
+                phone2: '+911614910150',
                 email: 'ludhiana@ifixtech.co.in',
                 website: 'https://ifixtech.co.in',
                 address: 'IFIXTECH, Sua Rd, Passi Nagar, Pakhowal Rd, Ludhiana, Punjab, 141013, India'
             };
 
             if (isMobile()) {
-                // Try mobile-specific methods first
-                if (isIOS()) {
-                    tryIOSContact(contactData);
-                } else if (isAndroid()) {
-                    tryAndroidContact(contactData);
-                } else {
-                    // Fallback for other mobile devices
-                    tryVCardDownload(contactData);
-                }
+                // On mobile, just download the vCard file directly
+                tryVCardDownload(contactData);
             } else {
-                // Desktop - show options
+                // Desktop - show options except Outlook
                 showDesktopContactOptions(contactData);
-            }
-        }
-
-        // iOS contact method
-        function tryIOSContact(data) {
-            // Try to open iOS contacts app with pre-filled data
-            const contactURL = `mailto:${data.email}?subject=Add%20Contact&body=Name:%20${encodeURIComponent(data.name)}%0AOrganization:%20${encodeURIComponent(data.org)}%0APhone%201:%20${encodeURIComponent(data.phone1)}%0APhone%202:%20${encodeURIComponent(data.phone2)}%0AEmail:%20${encodeURIComponent(data.email)}%0AWebsite:%20${encodeURIComponent(data.website)}%0AAddress:%20${encodeURIComponent(data.address)}`;
-            
-            // First try vCard method
-            const vCardURL = createVCardDataURL(data);
-            const link = document.createElement('a');
-            link.href = vCardURL;
-            link.download = 'iFixTech-Contact.vcf';
-            
-            // Try to trigger the download
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Clean up
-            setTimeout(() => {
-                URL.revokeObjectURL(vCardURL);
-            }, 1000);
-            
-            showToast('Contact file created! Open it to add to your contacts.');
-        }
-
-        // Android contact method
-        function tryAndroidContact(data) {
-            // Try Android intent first
-            const androidIntent = `intent://contacts/people/#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.dir/contact;S.name=${encodeURIComponent(data.name)};S.phone=${encodeURIComponent(data.phone1)};S.email=${encodeURIComponent(data.email)};S.company=${encodeURIComponent(data.org)};S.postal=${encodeURIComponent(data.address)};end`;
-            
-            try {
-                window.location.href = androidIntent;
-                showToast('Opening contacts app...');
-            } catch (error) {
-                // Fallback to vCard download
-                tryVCardDownload(data);
             }
         }
 
@@ -612,36 +590,33 @@
 VERSION:3.0
 FN:${data.name}
 ORG:${data.org}
-TEL;TYPE=WORK:${data.phone1}
-TEL;TYPE=MOBILE:${data.phone2}
+TEL;TYPE=CALL:${data.phone2}
+TEL;TYPE=WHATSAPP:${data.phone1}
 EMAIL:${data.email}
 URL:${data.website}
 ADR;TYPE=WORK:;;${data.address}
 END:VCARD`;
-            
+
             const blob = new Blob([vcard], { type: 'text/vcard' });
             return URL.createObjectURL(blob);
         }
 
-        // VCard download fallback
+        // VCard download
         function tryVCardDownload(data) {
             const vCardURL = createVCardDataURL(data);
             const link = document.createElement('a');
             link.href = vCardURL;
             link.download = 'iFixTech-Contact.vcf';
-            
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            
             setTimeout(() => {
                 URL.revokeObjectURL(vCardURL);
             }, 1000);
-            
             showToast('Contact file downloaded! Open it to add to your contacts.');
         }
 
-        // Desktop contact options
+        // Desktop contact options (no Outlook)
         function showDesktopContactOptions(data) {
             // Create a modal-like overlay
             const overlay = document.createElement('div');
@@ -658,7 +633,7 @@ END:VCARD`;
                 z-index: 10000;
                 backdrop-filter: blur(5px);
             `;
-            
+
             const modal = document.createElement('div');
             modal.style.cssText = `
                 background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
@@ -671,11 +646,10 @@ END:VCARD`;
                 border: 1px solid rgba(255, 255, 255, 0.2);
                 box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             `;
-            
+
             modal.innerHTML = `
                 <h3 style="margin-bottom: 20px; font-size: 24px;">Save Contact</h3>
                 <p style="margin-bottom: 25px; opacity: 0.9;">Choose how you'd like to save our contact:</p>
-                
                 <div style="display: flex; flex-direction: column; gap: 15px;">
                     <button id="downloadVCard" style="
                         background: rgba(255, 255, 255, 0.1);
@@ -688,7 +662,7 @@ END:VCARD`;
                         transition: all 0.3s ease;
                         backdrop-filter: blur(10px);
                     ">📱 Download Contact File (.vcf)</button>
-                    
+
                     <button id="copyContact" style="
                         background: rgba(255, 255, 255, 0.1);
                         border: 1px solid rgba(255, 255, 255, 0.3);
@@ -700,19 +674,7 @@ END:VCARD`;
                         transition: all 0.3s ease;
                         backdrop-filter: blur(10px);
                     ">📋 Copy Contact Info</button>
-                    
-                    <button id="outlookContact" style="
-                        background: rgba(255, 255, 255, 0.1);
-                        border: 1px solid rgba(255, 255, 255, 0.3);
-                        color: white;
-                        padding: 15px 20px;
-                        border-radius: 10px;
-                        cursor: pointer;
-                        font-size: 16px;
-                        transition: all 0.3s ease;
-                        backdrop-filter: blur(10px);
-                    ">📧 Add to Outlook</button>
-                    
+
                     <button id="closeModal" style="
                         background: rgba(255, 255, 255, 0.05);
                         border: 1px solid rgba(255, 255, 255, 0.2);
@@ -725,8 +687,7 @@ END:VCARD`;
                     ">Cancel</button>
                 </div>
             `;
-            
-            // Add hover effects
+
             const buttons = modal.querySelectorAll('button:not(#closeModal)');
             buttons.forEach(button => {
                 button.addEventListener('mouseenter', () => {
@@ -738,39 +699,40 @@ END:VCARD`;
                     button.style.transform = 'translateY(0)';
                 });
             });
-            
+
             overlay.appendChild(modal);
             document.body.appendChild(overlay);
-            
-            // Add event listeners
+
             document.getElementById('downloadVCard').addEventListener('click', () => {
                 tryVCardDownload(data);
                 document.body.removeChild(overlay);
             });
-            
+
             document.getElementById('copyContact').addEventListener('click', () => {
-                const contactText = `${data.name}\n${data.org}\n\nPhone: ${data.phone1}\nPhone: ${data.phone2}\nEmail: ${data.email}\nWebsite: ${data.website}\nAddress: ${data.address}`;
-                
-                navigator.clipboard.writeText(contactText).then(() => {
-                    showToast('Contact info copied to clipboard!');
-                }).catch(() => {
-                    showToast('Unable to copy contact info');
+                const contactText = 
+                `iFixTech
+
+                Phone: 01614910150
+                Whatsapp: wa.me/917973788148
+                Email: ludhiana@ifixtech.co.in
+                Website: https://ifixtech.co.in
+                Address: IFIXTECH, Sua Rd, Passi Nagar, Pakhowal Rd, Ludhiana, Punjab, 141013, India
+
+                Apple Maps: https://maps.apple/p/XmAxCcL5L74iEc
+                Google Maps: https://maps.app.goo.gl/FqA1pDJftvWagA4F6
+                `;
+                    navigator.clipboard.writeText(contactText).then(() => {
+                        showToast('Contact info copied to clipboard!');
+                    }).catch(() => {
+                        showToast('Unable to copy contact info');
+                    });
+                    document.body.removeChild(overlay);
                 });
-                document.body.removeChild(overlay);
-            });
-            
-            document.getElementById('outlookContact').addEventListener('click', () => {
-                const outlookURL = `https://outlook.live.com/people/0/new?name=${encodeURIComponent(data.name)}&email=${encodeURIComponent(data.email)}&phone=${encodeURIComponent(data.phone1)}&company=${encodeURIComponent(data.org)}`;
-                window.open(outlookURL, '_blank');
-                document.body.removeChild(overlay);
-                showToast('Opening Outlook...');
-            });
-            
+
             document.getElementById('closeModal').addEventListener('click', () => {
                 document.body.removeChild(overlay);
             });
-            
-            // Close on overlay click
+
             overlay.addEventListener('click', (e) => {
                 if (e.target === overlay) {
                     document.body.removeChild(overlay);
@@ -796,9 +758,7 @@ END:VCARD`;
             particle.style.pointerEvents = 'none';
             particle.style.zIndex = '1000';
             particle.style.animation = 'touchParticle 1s ease-out forwards';
-            
             document.body.appendChild(particle);
-            
             setTimeout(() => {
                 particle.remove();
             }, 1000);
@@ -813,6 +773,7 @@ END:VCARD`;
             }
         `;
         document.head.appendChild(style);
+
     </script>
 </body>
 </html>
